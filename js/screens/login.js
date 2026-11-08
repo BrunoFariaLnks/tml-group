@@ -10,6 +10,25 @@ function card(inner) {
   </div>`;
 }
 
+const linkBox = () => `
+      <details class="link-help">
+        <summary>Already have a sign in link from the email?</summary>
+        <p class="hint">Copy the whole link (or the whole address of the page it opened) and paste it here.</p>
+        <form id="f-link" novalidate>
+          <input class="input" name="link" inputmode="url" autocomplete="off" placeholder="Paste the link here">
+          <button class="btn primary" style="width:100%;margin-top:10px" type="submit">Sign in with link</button>
+        </form>
+      </details>`;
+
+function bindLink(root, store, onError) {
+  root.querySelector('#f-link').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Checking…';
+    try { await store.verifyLink(e.target.link.value); }
+    catch (err) { onError(friendly(err)); }
+  });
+}
+
 function friendly(err) {
   const m = String(err?.message || err || '');
   if (/rate|too many|security purposes/i.test(m)) return 'Too many codes asked for. Wait a minute, then try again.';
@@ -31,7 +50,9 @@ export function mount(root, { store }) {
           <input class="input" type="email" name="email" autocomplete="email" required value="${esc(email)}"></label>
         ${error ? `<p class="error-text" role="alert">${esc(error)}</p>` : ''}
         <button class="btn primary" style="width:100%" type="submit">Send code</button>
-      </form>`);
+      </form>
+      ${linkBox()}`);
+    bindLink(root, store, askEmail);
     const f = root.querySelector('#f-email');
     f.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -54,14 +75,7 @@ export function mount(root, { store }) {
         ${error ? `<p class="error-text" role="alert">${esc(error)}</p>` : ''}
         <button class="btn primary" style="width:100%" type="submit">Sign in</button>
       </form>
-      <details class="link-help">
-        <summary>The email has a link, not a code?</summary>
-        <p class="hint">On this laptop, just click the link in the email and this app signs you in. On iPhone, press and hold the link in the email, tap Copy Link, then paste it here.</p>
-        <form id="f-link" novalidate>
-          <input class="input" name="link" inputmode="url" autocomplete="off" placeholder="Paste the link from the email">
-          <button class="btn primary" style="width:100%;margin-top:10px" type="submit">Sign in with link</button>
-        </form>
-      </details>
+      ${linkBox()}
       <form>
         <div class="sheet-actions" style="justify-content:space-between">
           <button class="btn small" type="button" id="b-back">Change email</button>
@@ -82,12 +96,7 @@ export function mount(root, { store }) {
       try { await store.verifyCode(email, code); }
       catch (err) { askCode(friendly(err)); }
     });
-    root.querySelector('#f-link').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Checking…';
-      try { await store.verifyLink(e.target.link.value); }
-      catch (err) { askCode(friendly(err)); }
-    });
+    bindLink(root, store, askCode);
     root.querySelector('#b-back').addEventListener('click', () => askEmail());
     root.querySelector('#b-resend').addEventListener('click', async () => {
       try { await store.sendCode(email); askCode('New code sent. Use the newest email.'); }

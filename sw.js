@@ -1,6 +1,6 @@
 // Offline support: network first for the app's own files, cached copy when offline.
 // Supabase API calls are never cached.
-const CACHE = 'tml-shell-v3';
+const CACHE = 'tml-shell-v4';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.json',
   'js/app.js', 'js/config.js', 'js/store.js', 'js/rates.js', 'js/dates.js', 'js/tax.js',
