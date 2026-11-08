@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>TML Group</title>
+  <meta name="description" content="Deadlines, money and tax for TML GROUP LTD.">
+  <meta name="theme-color" content="#17140f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TML Group">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="frame" id="frame" hidden>
+    <aside class="sidebar" aria-label="Main">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">TML</span>
+        <span class="brand-name">TML Group</span>
+      </div>
+      <nav class="side-nav" id="side-nav"></nav>
+      <div class="side-foot">
+        <span class="side-company" id="side-company">TML GROUP LTD</span>
+      </div>
+    </aside>
+    <main class="content" id="content">
+      <div class="offline" id="offline" hidden>You're offline. You can look around, but changes are paused until you're back online.</div>
+      <div class="view" id="view" tabindex="-1"></div>
+    </main>
+    <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+  </div>
+
+  <div class="login-wrap" id="login" hidden></div>
+  <div class="boot" id="boot" aria-live="polite"><span class="brand-mark">TML</span></div>
+
+  <dialog class="sheet" id="sheet"></dialog>
+  <div class="toasts" id="toasts" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
