@@ -3,7 +3,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 
 export const sb = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' },
 });
 
 function must({ data, error }) {
@@ -13,10 +13,24 @@ function must({ data, error }) {
 
 // Auth: 6 digit email code
 export async function sendCode(email) {
-  must(await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true } }));
+  const home = location.origin + location.pathname.replace(/index\.html$/, '');
+  must(await sb.auth.signInWithOtp({ email, options: { shouldCreateUser: true, emailRedirectTo: home } }));
 }
 export async function verifyCode(email, code) {
   return must(await sb.auth.verifyOtp({ email, token: String(code).trim(), type: 'email' })).session;
+}
+// Sign in from a pasted email link (iPhone: links open Safari, not the app).
+export async function verifyLink(link) {
+  let u;
+  try { u = new URL(String(link).trim()); } catch { throw new Error('That is not a link. Copy the whole link from the email.'); }
+  const hash = new URLSearchParams(u.hash.replace(/^#/, ''));
+  if (hash.get('access_token') && hash.get('refresh_token')) {
+    return must(await sb.auth.setSession({ access_token: hash.get('access_token'), refresh_token: hash.get('refresh_token') })).session;
+  }
+  const token = u.searchParams.get('token') || u.searchParams.get('token_hash');
+  const type = u.searchParams.get('type') || 'magiclink';
+  if (!token) throw new Error('That link has no sign in code in it. Copy the link from the newest email.');
+  return must(await sb.auth.verifyOtp({ token_hash: token, type: type === 'signup' ? 'signup' : 'magiclink' })).session;
 }
 export async function signOut() { must(await sb.auth.signOut()); }
 export async function session() { return must(await sb.auth.getSession()).session; }

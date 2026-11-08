@@ -45,14 +45,24 @@ export function mount(root, { store }) {
 
   const askCode = (error = '') => {
     root.innerHTML = card(`
-      <h1>Enter your code</h1>
-      <p>We sent a 6 digit code to ${esc(email)}. It can take a minute to arrive.</p>
+      <h1>Check your email</h1>
+      <p>We sent an email to ${esc(email)}. It can take a minute to arrive. Check spam too.</p>
       <form id="f-code" novalidate>
-        <label class="field"><span>Code</span>
+        <label class="field"><span>6 digit code</span>
           <input class="input code-input" name="code" inputmode="numeric" autocomplete="one-time-code"
             pattern="[0-9]{6,8}" maxlength="8" required autofocus></label>
         ${error ? `<p class="error-text" role="alert">${esc(error)}</p>` : ''}
         <button class="btn primary" style="width:100%" type="submit">Sign in</button>
+      </form>
+      <details class="link-help">
+        <summary>The email has a link, not a code?</summary>
+        <p class="hint">On this laptop, just click the link in the email and this app signs you in. On iPhone, press and hold the link in the email, tap Copy Link, then paste it here.</p>
+        <form id="f-link" novalidate>
+          <input class="input" name="link" inputmode="url" autocomplete="off" placeholder="Paste the link from the email">
+          <button class="btn primary" style="width:100%;margin-top:10px" type="submit">Sign in with link</button>
+        </form>
+      </details>
+      <form>
         <div class="sheet-actions" style="justify-content:space-between">
           <button class="btn small" type="button" id="b-back">Change email</button>
           <button class="btn small" type="button" id="b-resend">Send a new code</button>
@@ -70,6 +80,12 @@ export function mount(root, { store }) {
       if (!/^\d{6,8}$/.test(code)) return askCode('Enter the full code from the email.');
       const b = f.querySelector('button[type=submit]'); b.disabled = true; b.textContent = 'Checking…';
       try { await store.verifyCode(email, code); }
+      catch (err) { askCode(friendly(err)); }
+    });
+    root.querySelector('#f-link').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Checking…';
+      try { await store.verifyLink(e.target.link.value); }
       catch (err) { askCode(friendly(err)); }
     });
     root.querySelector('#b-back').addEventListener('click', () => askEmail());

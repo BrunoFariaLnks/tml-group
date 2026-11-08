@@ -389,3 +389,7 @@ svg.area { width: 100%; height: auto; display: block; }
 .kv { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .kv:last-child { border-bottom: 0; }
 .sep { border: 0; border-top: 1px solid var(--line); margin: 18px 0; }
+
+.link-help { margin: 18px 0 4px; }
+.link-help summary { cursor: pointer; font-weight: 650; color: var(--soon); }
+.link-help p { margin: 10px 0; }
