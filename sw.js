@@ -1,12 +1,15 @@
 // Offline support: network first for the app's own files, cached copy when offline.
 // Supabase API calls are never cached.
-const CACHE = 'tml-shell-v5';
+const CACHE = 'tml-shell-v6';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.json',
   'js/app.js', 'js/config.js', 'js/store.js', 'js/rates.js', 'js/dates.js', 'js/tax.js',
   'js/deadlines.js', 'js/csv.js', 'js/model.js', 'js/format.js', 'js/charts.js', 'js/guides.js', 'js/push.js',
   'js/screens/login.js', 'js/screens/today.js', 'js/screens/deadlines.js', 'js/screens/money.js', 'js/screens/guides.js', 'js/screens/more.js',
   'icons/icon-192.png', 'icons/icon-180.png',
+  'brand/tml-group-on-dark.svg', 'brand/tml-group-on-light.svg', 'brand/tml-wordmark-white.svg',
+  'fonts/figtree-latin-400-normal.ttf', 'fonts/figtree-latin-700-normal.ttf',
+  'fonts/bricolage-grotesque-latin-700-normal.ttf', 'fonts/bricolage-grotesque-latin-800-normal.ttf',
 ];
 const SUPABASE_JS = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/+esm';
 

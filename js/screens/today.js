@@ -34,7 +34,7 @@ function hero(item, today, esc) {
         <h2 class="hero-title">${esc(item.title)}</h2>
         <div class="hero-date">${dateLong(item.due)}${item.amountPence ? `, fee ${money(item.amountPence)}` : ''}</div>
       </div>
-      ${ring(left, 30, 96, overdue ? '#ff6a52' : '#ffb020')}
+      ${ring(left, 30, 96, overdue ? '#ff5a3c' : '#f37100')}
     </div>
     <div class="hero-count num">${left === 0 ? 'Today' : big}<small>${left === 0 ? '' : unit}</small></div>
     <div class="hero-actions">
@@ -108,7 +108,7 @@ export function view(state, { esc }) {
 
     <section class="card t-chart">
       <div class="chart-head"><div><h3>Money over time</h3><p class="card-sub">Last 12 months</p></div>
-        <div class="legend"><span><i style="background:#f08a00"></i>In</span><span><i style="background:var(--ink);opacity:.55"></i>Out</span></div></div>
+        <div class="legend"><span><i style="background:#f3500a"></i>In</span><span><i style="background:var(--ink);opacity:.55"></i>Out</span></div></div>
       ${areaChart(series.map((s) => ({ ...s, label: monthName(s.month) })))}
     </section>
 

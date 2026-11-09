@@ -5,7 +5,7 @@ const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '
 
 function card(inner) {
   return `<div class="login-card">
-    <div class="brand"><span class="brand-mark" aria-hidden="true">TML</span><span class="brand-name">TML Group</span></div>
+    <div class="brand"><img class="brand-logo" src="brand/tml-group-on-light.svg" alt="TML Group"></div>
     ${inner}
   </div>`;
 }

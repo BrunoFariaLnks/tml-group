@@ -7,7 +7,7 @@ import { money, moneyShort, dateShort, monthName, parsePounds } from '../format.
 import { areaChart, donut } from '../charts.js';
 
 const ui = { period: 'year', from: '', to: '', q: '' };
-const PALETTE = ['#f08a00', '#1b1915', '#ffb020', '#8a7f72', '#c85a00', '#d9cfc2', '#5b5bd6', '#1f8f5a', '#cf3b26', '#b8a48c', '#6f6a63', '#ffd27a'];
+const PALETTE = ['#f3500a', '#1b1915', '#f37100', '#8a7f72', '#c85a00', '#d9cfc2', '#5b5bd6', '#1f8f5a', '#cf3b26', '#b8a48c', '#6f6a63', '#ffd27a'];
 
 function range(state, today) {
   const acc = accountingPeriod(state.company, today);
@@ -101,7 +101,7 @@ export function view(state, { esc, params }) {
 
     <section class="card wide">
       <div class="chart-head"><div><h3>In and out</h3><p class="card-sub">Last 12 months</p></div>
-        <div class="legend"><span><i style="background:#f08a00"></i>In</span><span><i style="background:var(--ink);opacity:.55"></i>Out</span></div></div>
+        <div class="legend"><span><i style="background:#f3500a"></i>In</span><span><i style="background:var(--ink);opacity:.55"></i>Out</span></div></div>
       ${areaChart(series, innerWidth < 900 ? 520 : 1000, innerWidth < 900 ? 240 : 240)}
     </section>
   </div>

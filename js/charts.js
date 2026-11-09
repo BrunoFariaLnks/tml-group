@@ -47,11 +47,11 @@ export function areaChart(series, w = 640, h = 220) {
   const labels = series.map((s, i) => `<text x="${n(x(i))}" y="${h - 6}" text-anchor="middle" font-size="11" fill="var(--muted)">${s.label}</text>`).join('');
   return `<svg class="area" viewBox="0 0 ${w} ${h}" role="img" aria-label="Money in and out by month">
     <defs>
-      <linearGradient id="${id}i" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f08a00" stop-opacity=".35"/><stop offset="1" stop-color="#ffb020" stop-opacity="0"/></linearGradient>
+      <linearGradient id="${id}i" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3500a" stop-opacity=".35"/><stop offset="1" stop-color="#f37100" stop-opacity="0"/></linearGradient>
     </defs>
     ${grid}
     <path d="${smooth(pin, base)} L${n(x(series.length - 1))} ${base} L${n(x(0))} ${base} Z" fill="url(#${id}i)"/>
-    <path class="draw" pathLength="1" d="${smooth(pin, base)}" fill="none" stroke="#f08a00" stroke-width="2.5" stroke-linecap="round"/>
+    <path class="draw" pathLength="1" d="${smooth(pin, base)}" fill="none" stroke="#f3500a" stroke-width="2.5" stroke-linecap="round"/>
     <path class="draw" pathLength="1" d="${smooth(pout, base)}" fill="none" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round" opacity=".55"/>
     ${labels}
   </svg>`;
@@ -73,7 +73,7 @@ export function donut(parts, size = 180) {
 }
 
 // Countdown ring: fills as the date gets closer within a 30 day window.
-export function ring(daysLeft, totalDays = 30, size = 120, color = '#ffb020') {
+export function ring(daysLeft, totalDays = 30, size = 120, color = '#f37100') {
   const r = size / 2 - 8, c = 2 * Math.PI * r;
   const f = daysLeft < 0 ? 1 : Math.max(0.04, 1 - Math.min(daysLeft, totalDays) / totalDays);
   return `<svg class="ring" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}" aria-hidden="true">
