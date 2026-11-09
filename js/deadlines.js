@@ -23,7 +23,8 @@ export function generateDeadlines(c) {
   for (let i = 1; i <= YEARS + 1; i++) ards.push(addMonths(ards[0], 12 * i));
   for (let i = 1; i <= YEARS; i++) {
     const anniv = addMonths(inc, 12 * i);
-    out.push(item(`cs-${anniv.slice(0, 4)}`, 'Confirmation statement', addDays(anniv, 14), 'cs', SRC.cs, { amountPence: 5000 }));
+    // Review period ends the day before the anniversary; file within 14 days of that.
+    out.push(item(`cs-${anniv.slice(0, 4)}`, 'Confirmation statement', addDays(anniv, 13), 'cs', SRC.cs, { amountPence: 5000 }));
     out.push(item(`accounts-${i}`, 'Annual accounts to Companies House', i === 1 ? addMonths(inc, 21) : addMonths(ards[i - 1], 9), 'accounts', SRC.accounts, { ard: ards[i - 1] }));
   }
   if (c.tradingStartDate) {
